@@ -1,0 +1,28 @@
+from itertools import product
+import string
+
+# Define the characters
+characters = string.ascii_letters + string.digits + string.punctuation  # Includes all letters, digits, and punctuation
+
+# Custom range for the length of combinations
+custom_range = range(3, 7)  # Change this range as needed
+
+# Generate combinations
+combinations = []
+for length in custom_range:
+    for comb in product(characters, repeat=length):
+        # Check if no more than two identical characters appear consecutively
+        consecutive = False
+        for i in range(len(comb) - 2):
+            if comb[i] == comb[i+1] == comb[i+2]:
+                consecutive = True
+                break
+        if not consecutive:
+            combination = ''.join(comb)
+            combinations.append(combination)
+            print(combination)
+
+# Save combinations to a file
+with open("password_combinations.txt", "w") as file:
+    for combo in combinations:
+        file.write(combo + "\n")
